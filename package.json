@@ -1,0 +1,22 @@
+{
+  "name": "doraemon",
+  "version": "1.0.0",
+  "description": "项目中会使用到的工具,希望能可以像哆啦A梦一样的帮助到我，哇哈哈哈！",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmm0591/doraemon.git"
+  },
+  "author": "lmm0591 <lmm0591@qq.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmm0591/doraemon/issues"
+  },
+  "homepage": "https://github.com/lmm0591/doraemon#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
