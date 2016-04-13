@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/lmm0591/doraemon#readme",
   "dependencies": {
-    "commander": "^2.9.0"
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "debug": "^2.2.0",
+    "inquirer": "^1.0.0"
   }
 }
