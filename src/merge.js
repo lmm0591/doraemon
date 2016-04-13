@@ -20,46 +20,49 @@ module.exports = function(file, megerFile , outFile) {
   var report = merger(fileContext, megerContext);
   console.log("=========================================================".prompt)
 
-  //fs.writeFileSync(outFile, JSON.stringify(fileContext,null,2), 'utf8');
+  console.log('相似字段 %d 个!'.verbose , Object.keys(report.ignoreInfo).length);
+  console.log('更新字段 %d 个!'.info, Object.keys(report.updateInfo).length);
+  console.log('新增字段 %d 个!'.error , Object.keys(report.errorInfo).length);
 
-
-
-  var errorLen = Object.keys(report.errorInfo).length;
-  console.log(errorLen)
-  if (errorLen === 0) {
-  var questions = [
-    {
-      type: 'list',
-      name: 'prize',
-      message: '警告，翻译文件有额外增加字段 ' + errorLen + '字段！',
-      choices: [
-      {
-        key: 's',
-        name: '查看字段'
-      },
-      {
-        key: 'i',
-        name: '忽略警告并创建文件'
-      }
-    ],
-    when: function(answers) {
-        console.log('ddd');
-        console.log(answers.comments);
-        return answers.comments !== 'Nope, all good!';
-      }
-    }
-  ];
-  inquirer.prompt(questions).then(function (answers) {
-    console.log('\nOrder receipt:');
-    console.log(JSON.stringify(answers, null, '  '));
-  });
-  } else {
-    console.log('相似字段 %d 个!'.verbose , Object.keys(report.ignoreInfo).length);
-    console.log('修改字段 %d 个!'.info, Object.keys(report.updateInfo).length);
-  }
+  question(report , outFile , fileContext);
 
 }
 
+function question(report , outFile , fileContext) {
+  var errorLen = Object.keys(report.errorInfo).length;
+
+  var choices = [
+    { name: '创建文件', value: 'crate' },
+    { name: '查看更新的字段', value: 'update'  }
+  ];
+  errorLen && choices.push( { name: '查看额外增加的 ' + errorLen + ' 字段', value: 'error' });
+
+  var questions = [{
+    type: 'rawlist',
+    name: 'command',
+    message: '警告! 翻译文件有额外增加字段 ' + errorLen + ' 字段！',
+    choices: choices
+  }];
+
+  inquirer.prompt(questions).then(function(answers) {
+    var command = answers.command;
+    if (command === 'error') {
+      console.log('额外增加字段: ');
+      console.log(JSON.stringify(report.errorInfo, null, 2));
+      question(report, outFile,fileContext);
+    } else if (command === 'update') {
+      console.log(JSON.stringify(report.updateInfo, null, 2));
+      question(report, outFile,fileContext);
+    } else if (command === 'crate') {
+
+      fs.writeFile(outFile, JSON.stringify(fileContext, null, 2), 'utf8', function() {
+        console.log('文件已生成!');
+        console.log('输出路径: %s', outFile);
+      });
+
+    }
+  });
+}
 
 function merger(sourceFile, addFile) {
 
@@ -70,7 +73,7 @@ function merger(sourceFile, addFile) {
   };
 
   Object.keys(addFile).forEach(function(key) {
-    if (sourceFile.hasOwnProperty(key)) {
+    if (sourceFile.hasOwnProperty(key) === false) {
       //正常情况翻译文件不会增加新的字段，所以要记录下增加的字段给开发人员分析
       report.errorInfo[key] = sourceFile[key] = addFile[key];
 
@@ -86,7 +89,5 @@ function merger(sourceFile, addFile) {
     }
   })
 
-
   return report;
-
 }
