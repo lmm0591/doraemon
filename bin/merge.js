@@ -19,13 +19,19 @@ module.exports = function(file, megerFile , outFile) {
   var megerContext = require(megerPath);
 
   var report = merger(fileContext, megerContext);
-  console.log("=========================================================".prompt)
-
+  console.log("=========================================================".prompt);
+  var updateLen = Object.keys(report.updateInfo).length;
+  var errorLen = Object.keys(report.errorInfo).length;
   console.log('相似字段 %d 个!'.verbose , Object.keys(report.ignoreInfo).length);
   console.log('更新字段 %d 个!'.info, Object.keys(report.updateInfo).length);
   console.log('新增字段 %d 个!'.error , Object.keys(report.errorInfo).length);
 
-  question(report , outFile , fileContext);
+  if (updateLen || errorLen) {
+      question(report , outFile , fileContext);
+  } else {
+    console.log('没有字段需要更新!'.info );
+  }
+
 
 }
 
