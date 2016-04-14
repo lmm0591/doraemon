@@ -1,4 +1,6 @@
-'use strict'
+#!/usr/bin/env node
+
+'use strict';
 
 var program = require('commander');
 var colors = require('colors');
@@ -26,7 +28,7 @@ program
 program
   .command('merge [file] [megerFile] [outFile]')
   .description('合并 JSON 文件')
-  .action(require('./src/merge'));
+  .action(require('./merge'));
 
 program.parse(process.argv)
 
