@@ -1,6 +1,6 @@
 
 var pathJoin = require('path').join;
-var fs = require('fs')
+var fs = require('fs');
 var inquirer = require('inquirer');
 
 var ROOT_PATH = process.cwd();
