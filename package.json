@@ -1,6 +1,6 @@
 {
   "name": "nd-doraemon",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "项目中会使用到的工具,希望能可以像哆啦A梦一样的帮助到我，哇哈哈哈！",
   "main": "./bin/index.js",
   "bin": {
