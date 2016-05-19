@@ -2,7 +2,7 @@
 
 >项目中会使用到的工具,希望能可以像哆啦A梦一样的帮助到我，哇哈哈哈！
 
-![cover](./doraemon_cover.jpg)
+![cover](./doraemon_cover.png)
 
 ## 安装
 
