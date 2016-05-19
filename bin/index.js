@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// #!/usr/bin/env node
 
 'use strict';
 
@@ -30,6 +30,10 @@ program
   .description('合并 JSON 文件')
   .action(require('./merge'));
 
+  program
+    .command('modules [routePath]')
+    .description('设置要移除的模块')
+    .option('-n, --noRemove', '没有模块要被移除')
+    .action(require('./loadModule'));
+
 program.parse(process.argv)
-
-
