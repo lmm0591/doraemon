@@ -6,7 +6,7 @@ var PATH = pathJoin('./src/routes/');
 var WEBPACK_PATH = './webpack/module.js';
 
 function isDisableFile(fileName){
-  return /\.bak$/.test(fileName)
+  return /\.doraemon-bak$/.test(fileName)
 }
 
 //获取路由文件列表
@@ -21,7 +21,7 @@ function getFileList(dir){
 function disableFile(fileName){
   var oldFilePath = pathJoin(PATH,fileName)
   //设置该文件不可被加载
-  var newFilePath = pathJoin(PATH,fileName.replace(/.js$/,'.bak'))
+  var newFilePath = pathJoin(PATH,fileName.replace(/.js$/,'.doraemon-bak'))
   try{
     FS.renameSync(oldFilePath, newFilePath)
   } catch(e) {
@@ -33,7 +33,7 @@ function disableFile(fileName){
 function ableFile(fileName){
   var oldFilePath = pathJoin(PATH,fileName)
   //设置该文件可被加载
-  var newFilePath = pathJoin(PATH,fileName.replace(/\.bak$/,'.js'))
+  var newFilePath = pathJoin(PATH,fileName.replace(/\.doraemon-bak$/,'.js'))
   try{
     FS.renameSync(oldFilePath, newFilePath)
   } catch(e) {
@@ -54,7 +54,7 @@ function buildReport(){
 function buildExcludeModules(modules){
   var data = modules.map(function(fileName){
     //除去文件后缀和前缀
-    return '/app\\' + fileName.replace(/(\.bak|\.js)$/,"/").replace(/^\d+/,"")
+    return '/app\\' + fileName.replace(/(\.doraemon-bak|\.js)$/,"/").replace(/^\d+/,"")
   })
   var loadConfig = {
     excludeModule : data
@@ -84,7 +84,7 @@ module.exports = function(routePath,command) {
     choiceList = [];
     //生成模块选择列表
     fileList.forEach(function(fileName){
-      choiceList.push({name:fileName.replace(/(.js|.bak)$/,''),value:fileName,checked:isDisableFile(fileName)})
+      choiceList.push({name:fileName.replace(/(.js|.doraemon-bak)$/,''),value:fileName,checked:isDisableFile(fileName)})
     })
 
     var questions = [{
