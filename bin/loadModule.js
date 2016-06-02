@@ -62,7 +62,7 @@ function buildExcludeModules(modules){
   // /\"\/([\w|\\]+)\/\"/g,"\/$1\/" 把字符串转成正则
   // 如： "/app\\shop/" => /app\\shop/
   var json = JSON.stringify(loadConfig,null,2).replace(/\"\/([\w|\\]+)\/\"/g,"\/$1\/")
-  json = json.replace("\"","'")
+  json = json.replace(/\"/g,"'")
   FS.writeFileSync(WEBPACK_PATH,"export default " + json)
   console.log('生成 webpack 配置文件！')
 }
