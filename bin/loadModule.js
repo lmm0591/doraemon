@@ -63,7 +63,7 @@ function buildExcludeModules(modules){
   // 如： "/app\\shop/" => /app\\shop/
   var json = JSON.stringify(loadConfig,null,2).replace(/\"\/([\w|\\]+)\/\"/g,"\/$1\/")
   json = json.replace(/\"/g,"'")
-  FS.writeFileSync(WEBPACK_PATH,"export default " + json)
+  FS.writeFileSync(WEBPACK_PATH,"export default " + json + "\n")
   console.log('生成 webpack 配置文件！')
 }
 
